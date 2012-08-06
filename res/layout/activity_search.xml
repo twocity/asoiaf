@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    >
+    <LinearLayout style="@style/TitleBar">
+    	<ImageButton style="@style/TitleBarAction"
+    		android:contentDescription="@string/description_logo"
+    		android:src="@drawable/title_home" 
+    		android:onClick="onClickHome" />
+    	<!--  <ImageView style="@style/TitleBarSeparator" /> -->
+    	<EditText style="@style/TitleBarSearch" 
+    	    android:id="@+id/edit_search" />
+
+    	<ImageButton style="@style/TitleBarAction"
+    		android:id="@+id/search_button"
+    		android:contentDescription="@string/description_search"
+    		android:src="@drawable/title_search"/>
+    </LinearLayout>
+    <WebView android:id="@+id/search_webview"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"/>    		
+
+</LinearLayout>

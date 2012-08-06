@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2011 Wglxy.com
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+         http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+<resources>
+    <string name="hello">Choose one of the features below.</string>
+
+    <string name="app_name">冰与火之歌维基</string>
+    <string name="description_logo">Demo</string>
+
+    <string name="description_about">About</string>
+    <string name="description_home">Home</string>
+    <string name="description_search">Search</string>
+    <string name="description_feature1">Feature 1</string>
+    <string name="description_feature2">Feature 2</string>
+    <string name="description_feature3">Feature 3</string>
+    <string name="description_feature4">Feature 4</string>
+    <string name="description_feature5">Feature 5</string>
+    <string name="description_feature6">Feature 6</string>
+
+    <string name="title_about">关于</string>
+    <string name="title_home">Home</string>
+    <string name="title_house">家族</string>
+    <string name="title_people">人物</string>
+    <string name="title_geography">地理</string>
+    <string name="title_history">历史</string>
+    <string name="title_culture">文化</string>
+    <string name="title_more">更多...</string>
+    <string name="title_search">搜索结果</string>
+
+    <string name="default_intro">This is the default content view for an activity. Be sure to change your activity\'s onCreate method. Use setContentView on a custom layout.</string>
+    <string name="feature1_intro">Feature 1 content goes here.</string>
+    <string name="feature2_intro">Feature 2 content goes here.</string>
+    <string name="feature3_intro">Feature 3 content goes here.</string>
+    <string name="feature4_intro">Feature 4 content goes here.</string>
+    <string name="feature5_intro">Feature 5 content goes here.</string>
+    <string name="feature6_intro">Feature 6 content goes here.</string>
+
+    <string name="about_intro">This app is a demo to show you how to do an Android app based on the Dashboard pattern that has been used in apps like Twitter, Google IO, and Evernote.</string>
+    <string name="search_intro">Content for the Search page goes here.</string>
+    <string name="home_title">冰与火之歌</string>
+    <string name="url_house">http://zh.asoiaf.wikia.com/wiki/Portal:家族</string>
+    <string name="url_people">http://zh.asoiaf.wikia.com/wiki/Portal:人物</string>
+    <string name="url_history">http://zh.asoiaf.wikia.com/wiki/Portal:历史</string>
+    <string name="url_geography">http://zh.asoiaf.wikia.com/wiki/Portal:地理</string>
+    <string name="url_culture">http://zh.asoiaf.wikia.com/wiki/Portal:文化</string>
+    <string name="url_maps">http://zh.asoiaf.wikia.com/wiki/Portal:地图</string>
+
+</resources>
