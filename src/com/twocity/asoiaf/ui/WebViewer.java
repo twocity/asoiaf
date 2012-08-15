@@ -2,19 +2,20 @@ package com.twocity.asoiaf.ui;
 
 
 
-import com.twocity.asoiaf.R;
-
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.twocity.asoiaf.R;
 
 
 public class WebViewer extends BaseActivity{
@@ -25,15 +26,22 @@ public class WebViewer extends BaseActivity{
     private WebView webview;
     private TextView titleText;
     private ProgressBar mProgressBar;
+    private TextView mTextViewTip;
     
     protected void onCreate(Bundle savedInstanceSaved) {
         super.onCreate(savedInstanceSaved);
-        setContentView(R.layout.webviewer_layout);
+        
+        
+        setContentView(R.layout.activity_webview);
+        
         
         titleText = (TextView)findViewById(R.id.title_text);
         String url = null;
         url = this.getIntent().getStringExtra(SEARCH_URL);
         titleText.setText(this.getIntent().getStringExtra(ACTIVITY_TITLE));
+        mProgressBar = (ProgressBar)findViewById(R.id.progressbar);
+        mTextViewTip = (TextView)findViewById(R.id.loading_tip);
+        mTextViewTip.setText(getTipString());
         
         setWebView(url);
     }
@@ -46,7 +54,10 @@ public class WebViewer extends BaseActivity{
         final Activity activity = this;
         webview.setWebChromeClient(new WebChromeClient() {
           public void onProgressChanged(WebView view, int progress) {
-            activity.setProgress(progress * 100);
+        	  mProgressBar.setProgress(progress);
+            if(progress == 100) {
+            	mProgressBar.setProgress(0);
+            }
           }
         });
         webview.setWebViewClient(new WebViewClient() {
@@ -55,10 +66,13 @@ public class WebViewer extends BaseActivity{
                 return true;  
             }
             public void onPageStarted(WebView view, String url, Bitmap favicon){
-                //mProgressBar.setVisibility(View.VISIBLE);
+            	mProgressBar.setProgress(0);
+                mProgressBar.setVisibility(View.VISIBLE);
             }
             public void onPageFinished(WebView view, String url) {
-                //mProgressBar.setVisibility(View.INVISIBLE);
+                mProgressBar.setVisibility(View.INVISIBLE);
+                mTextViewTip.setVisibility(View.INVISIBLE);
+                webview.setVisibility(View.VISIBLE);
             }
             public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
                 Toast.makeText(activity, "Oh no! " + description, Toast.LENGTH_SHORT).show();
@@ -66,6 +80,10 @@ public class WebViewer extends BaseActivity{
         });
 
         webview.loadUrl(url);
+    }
+    
+    public void onClickRefresh(View v){
+    	webview.reload();
     }
     
     final Handler handler = new Handler(){

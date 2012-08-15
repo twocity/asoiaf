@@ -17,9 +17,11 @@
 package com.twocity.asoiaf.ui;
 
 
-import com.twocity.asoiaf.R;
-
+import android.content.Intent;
 import android.os.Bundle;
+
+import com.twocity.asoiaf.R;
+import com.twocity.asoiaf.utils.DownloadIntentService;
 
 
 public class HomeActivity extends BaseActivity {
@@ -28,6 +30,9 @@ public class HomeActivity extends BaseActivity {
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        Intent i = new Intent(this,DownloadIntentService.class);
+        i.setAction("action_create_database");
+        this.startService(i);
     }
 
     

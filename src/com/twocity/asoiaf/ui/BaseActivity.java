@@ -1,7 +1,6 @@
 package com.twocity.asoiaf.ui;
 
-
-import com.twocity.asoiaf.R;
+import java.util.Random;
 
 import android.app.Activity;
 import android.content.Context;
@@ -12,12 +11,13 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.twocity.asoiaf.R;
+
 
 public abstract class BaseActivity extends Activity {
 
     private final static String SEARCH_URL = "search_url";
     private final static String ACTIVITY_TITLE = "activity_title";
-    
     
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,6 +100,8 @@ public abstract class BaseActivity extends Activity {
               startActivity(intent);
                break;
           case R.id.home_btn_more :
+        	  Intent i = new Intent(this,GridViewActivity.class);
+        	  startActivity(i);
                break;
           default: 
         	   break;
@@ -129,6 +131,14 @@ public abstract class BaseActivity extends Activity {
     {
         Log.d("Demo", msg);
         toast (msg);
+    }
+    
+    public String getTipString(){
+    	String [] tips = this.getResources().getStringArray(R.array.loading_tips);
+    	int length = tips.length;
+    	Random r = new Random();
+    	int index = r.nextInt(length);
+    	return tips[index];
     }
 
 } // end class

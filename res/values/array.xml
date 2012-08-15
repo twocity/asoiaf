@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="loading_tips">
+        <item>Valar Morghulis\n凡人皆有一死</item>
+        <item>虽然全天下的侏儒都可能被视为私生子\n私生子却不见得要被人视为侏儒</item>
+        <item>The king eats,and the Hand takes the shit.</item>
+        <item>恐惧比利剑更伤人</item>
+        <item>为耶哥蕊特，为火吻而生</item>
+        <item>在权力的游戏之中\n你不当赢家\n就只有死路一条\n没有中间地带</item>
+        <item>生亦何欢，死亦何苦</item>
+        <item>我的罪就是身为侏儒，我为此忏悔\n而且不管我的好老爸原谅我多少次，我继续着自己的丑行。</item>
+        <item>如果你在说出她的名字之前就死，爵士\n我会到七层地狱去追你</item>
+        <item>我代表詹姆．兰尼斯特\n向您致以亲切问候</item>
+        <item>Winter Is Coming\n凛冬将至</item>
+        <item>Hear Me Roar\n听我怒吼</item>
+        <item>Ours Is The Fury\n怒火燎原</item>
+        <item>High As Honor\n高如荣耀</item>
+        <item>Unbent,Unbowed,Unbroken\n不屈不饶</item>
+        <item>Family,Duty,Honor\n家族、责任、荣耀</item>
+        <item>We Do Not Sow\n强取胜于苦耕</item>
+        <item>Growing Strong\n生生不息</item>
+        <item>Blood And Fire\n血火同源</item>
+    </string-array>
+    
+</resources>

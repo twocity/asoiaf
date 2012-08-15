@@ -16,28 +16,31 @@
 
 package com.twocity.asoiaf.ui;
 
-import com.twocity.asoiaf.R;
-
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.View.OnKeyListener;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.twocity.asoiaf.R;
 
-public class SearchActivity extends BaseActivity implements OnClickListener{
+
+public class SearchActivity extends BaseActivity{
     private static final String SEARCH_URL = 
         "http://zh.asoiaf.wikia.com/wiki/Special:搜索?search=%s&fulltext=Search";
     private EditText mSearchEdit = null;
     private WebView webview;
+    private ProgressBar mProgressBar;
+    private TextView mTextViewTip;
     
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +62,9 @@ public class SearchActivity extends BaseActivity implements OnClickListener{
                 return false;
             }
         });
+        mProgressBar = (ProgressBar)findViewById(R.id.progressbar);
+        mTextViewTip = (TextView)findViewById(R.id.loading_tip);
+        mTextViewTip.setText(getTipString());
         setWebView();
     }
     
@@ -70,7 +76,14 @@ public class SearchActivity extends BaseActivity implements OnClickListener{
         final Activity activity = this;
         webview.setWebChromeClient(new WebChromeClient() {
           public void onProgressChanged(WebView view, int progress) {
-            activity.setProgress(progress * 100);
+        	  mProgressBar.setProgress(progress);
+              if(progress == 100) {
+              	mProgressBar.setProgress(0);
+              }
+//              if(progress >= 90){
+//            	  webview.setVisibility(View.VISIBLE);
+//            	  mTextViewTip.setVisibility(View.INVISIBLE);
+//              }
           }
         });
         webview.setWebViewClient(new WebViewClient() {
@@ -79,10 +92,13 @@ public class SearchActivity extends BaseActivity implements OnClickListener{
                 return true;  
             }
             public void onPageStarted(WebView view, String url, Bitmap favicon){
-                //mProgressBar.setVisibility(View.VISIBLE);
+                mProgressBar.setVisibility(View.VISIBLE);
+                mProgressBar.setProgress(0);
             }
             public void onPageFinished(WebView view, String url) {
-                //mProgressBar.setVisibility(View.INVISIBLE);
+                mProgressBar.setVisibility(View.INVISIBLE);
+          	    webview.setVisibility(View.VISIBLE);
+          	    mTextViewTip.setVisibility(View.INVISIBLE);
             }
             public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
                 Toast.makeText(activity, "Oh no! " + description, Toast.LENGTH_SHORT).show();
@@ -97,15 +113,8 @@ public class SearchActivity extends BaseActivity implements OnClickListener{
         webview.loadUrl(url);
     }
     
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.search_button:
-                search();
-                break;
-            default:
-                break;
-        }
+    public void onClickSearch(View v){
+    	search();
     }
     
 } // end class

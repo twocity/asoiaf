@@ -37,7 +37,7 @@
     <string name="title_geography">地理</string>
     <string name="title_history">历史</string>
     <string name="title_culture">文化</string>
-    <string name="title_more">更多...</string>
+    <string name="title_photos">图片</string>
     <string name="title_search">搜索结果</string>
 
     <string name="default_intro">This is the default content view for an activity. Be sure to change your activity\'s onCreate method. Use setContentView on a custom layout.</string>
@@ -57,5 +57,16 @@
     <string name="url_geography">http://zh.asoiaf.wikia.com/wiki/Portal:地理</string>
     <string name="url_culture">http://zh.asoiaf.wikia.com/wiki/Portal:文化</string>
     <string name="url_maps">http://zh.asoiaf.wikia.com/wiki/Portal:地图</string>
-
+    
+    <!-- menu -->
+    <string name="setwallpaper_title">设为壁纸</string>
+    <string name="save2sd_title">保存到SD卡</string>
+    <string name="set_wallpaper_toast_success">设置壁纸成功！</string>
+    <string name="set_wallpaper_toast_failed">啊哦，失败了，再试一次吧</string>
+    <string name="save2sd_success">已保存到sd卡</string>
+    <string name="not_mounted">sd卡未挂载！</string>
+    
+    <string name="first_load_data">初始化数据，请稍等</string>
+    <string name="loading_pic">Valar Morghulis\n凡人皆有一死</string>
+	<string name="search_loading_tip">长夜将至\n我从今开始守望，至死方休\n我将不娶妻，不封地，不生子\n我将不戴宝冠，不争荣宠\n我将尽忠职守，生死于斯\n我是黑暗中的利剑\n长城上的守卫\n抵御寒冷的烈焰\n破晓时分的光线\n唤醒眠者的号角\n守护王国的坚盾\n我将生命与荣耀献给守夜人\n今夜如此，夜夜皆然</string>
 </resources>

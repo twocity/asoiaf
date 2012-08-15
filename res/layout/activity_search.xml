@@ -16,10 +16,36 @@
     	<ImageButton style="@style/TitleBarAction"
     		android:id="@+id/search_button"
     		android:contentDescription="@string/description_search"
-    		android:src="@drawable/title_search"/>
+    		android:src="@drawable/title_search"
+    		android:onClick="onClickSearch"/>
     </LinearLayout>
-    <WebView android:id="@+id/search_webview"
+    
+    <ProgressBar android:id="@+id/progressbar"
+	    style="?android:attr/progressBarStyleHorizontal"
+	    android:layout_width="fill_parent"
+	    android:layout_height="3dp"
+	    android:max="100"
+	    android:visibility="gone"
+	/>
+    
+    <FrameLayout 
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"/>    		
+        android:layout_height="fill_parent">
+        
+         <TextView android:id="@+id/loading_tip"
+	        android:layout_width="fill_parent"
+	        android:layout_height="fill_parent"
+	        android:text="@string/search_loading_tip"
+	        android:textSize="@dimen/text_size_medium"
+	        android:gravity="center"
+	        android:textColor="#000000" />
+        
+        <WebView android:id="@+id/search_webview"
+	        android:layout_width="fill_parent"
+	        android:layout_height="fill_parent"
+	        android:visibility="gone"/>   
+        
+    </FrameLayout>
+ 		
 
 </LinearLayout>

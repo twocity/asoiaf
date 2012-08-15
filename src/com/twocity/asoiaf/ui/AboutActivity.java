@@ -19,6 +19,7 @@ package com.twocity.asoiaf.ui;
 import com.twocity.asoiaf.R;
 
 import android.os.Bundle;
+import android.widget.TextView;
 
 
 public class AboutActivity extends BaseActivity {
@@ -26,7 +27,8 @@ public class AboutActivity extends BaseActivity {
             super.onCreate(savedInstanceState);
         
             setContentView (R.layout.activity_about);
-            setTitleFromActivityLabel (R.id.title_text);
+            TextView titleText = (TextView)findViewById(R.id.title_text);
+            titleText.setText(R.string.title_about);
         }
         
 } 
