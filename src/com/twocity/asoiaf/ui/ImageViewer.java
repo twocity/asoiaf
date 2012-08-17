@@ -1,8 +1,12 @@
 package com.twocity.asoiaf.ui;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.assist.ImageLoadingListener;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
+import com.twocity.asoiaf.R;
+import com.twocity.asoiaf.utils.CustomHttpClient;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -17,76 +21,68 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
-import android.graphics.PointF;
-import android.graphics.RectF;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
-import android.util.DisplayMetrics;
-import android.util.FloatMath;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.Display;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnTouchListener;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.twocity.asoiaf.R;
-import com.twocity.asoiaf.utils.CustomHttpClient;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 
-public class ImageViewer extends BaseActivity implements OnTouchListener {
+public class ImageViewer extends BaseActivity {
 	private final static String TAG = "ImageViewer";
 	private static final String WALLPAPER_BUCKET_NAME =
 	        Environment.getExternalStorageDirectory().toString() + "/DCIM/asoiaf";
 	
 	private static final int REQUEST_CROP_IMAGE = 1;
-//	private static final int SAVE_PIC_OK = 1;
-    private Matrix matrix = new Matrix();
-    private Matrix savedMatrix = new Matrix();
-    private DisplayMetrics dm;
+	private static final int SAVE_PIC_OK = 2;
+	private static final int SD_NOT_MOUNT = 3;
+
     private ImageView imageView;
     private ProgressBar mProgressBar;
     private TextView mTextViewTip;
-    private Bitmap mBitmap;
     private String mPath = "";
-    private float minScaleR;// 最小缩放比例
-    private static final float MAX_SCALE = 4f;// 最大缩放比例
 
-    private static final int NONE = 0;// 初始状态
-    private static final int DRAG = 1;// 拖动
-    private static final int ZOOM = 2;// 缩放
-    private int mode = NONE;
-
-    private PointF prev = new PointF();
-    private PointF mid = new PointF();
-    private float dist = 1f;
+    private DisplayImageOptions options;
+    protected ImageLoader imageLoader = ImageLoader.getInstance();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_imageview);
         
-        dm = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(dm);
         
         mTextViewTip = (TextView)findViewById(R.id.loading_tip);
         mProgressBar = (ProgressBar)findViewById(R.id.progressbar);
         mProgressBar.setVisibility(View.VISIBLE);
         mProgressBar.setProgress(0);
-        imageView = (ImageView) findViewById(R.id.imageviewer);
-        imageView.setOnTouchListener(this);
-
-        mBitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.main_test_bg);
         
+        imageView = (ImageView) findViewById(R.id.imageviewer);
+        options = new DisplayImageOptions.Builder()
+        .showImageForEmptyUri(R.drawable.frame)
+        .cacheInMemory()
+        .cacheOnDisc()
+        .imageScaleType(ImageScaleType.EXACT)
+        .build();
+
+
         setImageView();
 
     }
@@ -100,157 +96,59 @@ public class ImageViewer extends BaseActivity implements OnTouchListener {
             	mPath = String.format("%s/asoiaf-%s.png", WALLPAPER_BUCKET_NAME,name);
             	Log.d(TAG,mPath);
             }
-            
-    		File tmp = new File(mPath);
-    		if(tmp.exists()){
-    			Log.d(TAG,"=== set bitmap from sdcard ===");
-            	mBitmap = BitmapFactory.decodeFile(mPath);
-            	if(mBitmap != null){
-                	imageView.setImageBitmap(mBitmap);
-                	mTextViewTip.setVisibility(View.INVISIBLE);
-        			imageView.setVisibility(View.VISIBLE);
-                    mProgressBar.setVisibility(View.INVISIBLE);
-                    
-                    minZoom();
-                    center();
-                    imageView.setImageMatrix(matrix);
-            	}
-    		}else{
-    			Log.d(TAG,"=== download bitmap ===");
-                imageView.setTag(url);
-                new DownloadImageTask().execute(imageView);
-    		}
-
     	}catch(Exception e){
     		Log.d(TAG,e.getMessage());
-            imageView.setTag(url);
-            new DownloadImageTask().execute(imageView);
+    		return;
     	}
-    }
-
-//    final Handler mHandler = new Handler(){
-//    	@Override
-//    	public void handleMessage(Message msg){
-//    		if(msg.what == SAVE_PIC_OK){
-//    			
-//    		}
-//    	}
-//    };
-
-    public boolean onTouch(View v, MotionEvent event) {
-
-        switch (event.getAction() & MotionEvent.ACTION_MASK) {
-        case MotionEvent.ACTION_DOWN:
-            savedMatrix.set(matrix);
-            prev.set(event.getX(), event.getY());
-            mode = DRAG;
-            break;
-        case MotionEvent.ACTION_POINTER_DOWN:
-            dist = spacing(event);
-            if (spacing(event) > 10f) {
-                savedMatrix.set(matrix);
-                midPoint(mid, event);
-                mode = ZOOM;
+    	
+    	imageLoader.displayImage(url, imageView, options, new ImageLoadingListener() {
+            @Override
+            public void onLoadingStarted() {
+                mTextViewTip.setVisibility(View.VISIBLE);
+                mProgressBar.setVisibility(View.VISIBLE);
+                imageView.setVisibility(View.INVISIBLE);
             }
-            break;
-        case MotionEvent.ACTION_UP:
-        case MotionEvent.ACTION_POINTER_UP:
-            mode = NONE;
-            break;
-        case MotionEvent.ACTION_MOVE:
-            if (mode == DRAG) {
-                matrix.set(savedMatrix);
-                matrix.postTranslate(event.getX() - prev.x, event.getY()
-                        - prev.y);
-            } else if (mode == ZOOM) {
-                float newDist = spacing(event);
-                if (newDist > 10f) {
-                    matrix.set(savedMatrix);
-                    float tScale = newDist / dist;
-                    matrix.postScale(tScale, tScale, mid.x, mid.y);
+            @Override
+            public void onProgressChanged(int progress){
+                mProgressBar.setProgress(progress);
+            }
+            @Override
+            public void onLoadingFailed(FailReason failReason) {
+                String message = null;
+                switch (failReason) {
+                    case IO_ERROR:
+                        message = "Input/Output error";
+                        break;
+                    case OUT_OF_MEMORY:
+                        message = "Out Of Memory error";
+                        break;
+                    case UNKNOWN:
+                        message = "Unknown error";
+                        break;
                 }
+                Toast.makeText(ImageViewer.this, message, Toast.LENGTH_SHORT).show();
+
+                imageView.setImageResource(android.R.drawable.ic_delete);
             }
-            break;
-        }
-        imageView.setImageMatrix(matrix);
-        CheckView();
-        return true;
-    }
 
-    private void CheckView() {
-        float p[] = new float[9];
-        matrix.getValues(p);
-        if (mode == ZOOM) {
-            if (p[0] < minScaleR) {
-                matrix.setScale(minScaleR, minScaleR);
+            @Override
+            public void onLoadingComplete(Bitmap loadedImage) {
+                mTextViewTip.setVisibility(View.INVISIBLE);
+                mProgressBar.setVisibility(View.INVISIBLE);
+                imageView.setVisibility(View.VISIBLE);
+                Animation anim = AnimationUtils.loadAnimation(ImageViewer.this, R.anim.fade_in);
+                imageView.setAnimation(anim);
+                anim.start();
             }
-            if (p[0] > MAX_SCALE) {
-                matrix.set(savedMatrix);
+
+            @Override
+            public void onLoadingCancelled() {
+                // Do nothing
             }
-        }
-        center();
+        });
     }
 
-    private void minZoom() {
-        minScaleR = Math.min(
-                (float) dm.widthPixels / (float) mBitmap.getWidth(),
-                (float) dm.heightPixels / (float) mBitmap.getHeight());
-        if (minScaleR < 1.0) {
-            matrix.postScale(minScaleR, minScaleR);
-        }
-    }
 
-    private void center() {
-        center(true, true);
-    }
-
-    protected void center(boolean horizontal, boolean vertical) {
-
-        Matrix m = new Matrix();
-        m.set(matrix);
-        RectF rect = new RectF(0, 0, mBitmap.getWidth(), mBitmap.getHeight());
-        m.mapRect(rect);
-
-        float height = rect.height();
-        float width = rect.width();
-
-        float deltaX = 0, deltaY = 0;
-
-        if (vertical) {
-            int screenHeight = dm.heightPixels;
-            if (height < screenHeight) {
-                deltaY = (screenHeight - height) / 2 - rect.top;
-            } else if (rect.top > 0) {
-                deltaY = -rect.top;
-            } else if (rect.bottom < screenHeight) {
-                deltaY = imageView.getHeight() - rect.bottom;
-            }
-        }
-
-        if (horizontal) {
-            int screenWidth = dm.widthPixels;
-            if (width < screenWidth) {
-                deltaX = (screenWidth - width) / 2 - rect.left;
-            } else if (rect.left > 0) {
-                deltaX = -rect.left;
-            } else if (rect.right < screenWidth) {
-                deltaX = screenWidth - rect.right;
-            }
-        }
-        matrix.postTranslate(deltaX, deltaY);
-    }
-
-    private float spacing(MotionEvent event) {
-        float x = event.getX(0) - event.getX(1);
-        float y = event.getY(0) - event.getY(1);
-        return FloatMath.sqrt(x * x + y * y);
-    }
-
-    private void midPoint(PointF point, MotionEvent event) {
-        float x = event.getX(0) + event.getX(1);
-        float y = event.getY(0) + event.getY(1);
-        point.set(x / 2, y / 2);
-    }
     
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
@@ -266,10 +164,25 @@ public class ImageViewer extends BaseActivity implements OnTouchListener {
     		setWallpaper();
 
     	}else */if(item.getItemId() == R.id.save2sd){
-    		save2SD();
+    		//save2SD();
+    	    mHandler.post(SaveBitmap2SdRunnable);
     	}
     	return true;
     }
+    
+    final Handler mHandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg){
+            switch(msg.what){
+                case SAVE_PIC_OK:
+                    Toast.makeText(ImageViewer.this, R.string.save2sd_success, Toast.LENGTH_SHORT).show();
+                    break;
+                case SD_NOT_MOUNT:
+                    Toast.makeText(ImageViewer.this,R.string.not_mounted, Toast.LENGTH_LONG).show();
+                    break;
+            }
+        }
+    };
     
     @SuppressWarnings("unused")
 	private void setWallpaper(){
@@ -301,6 +214,37 @@ public class ImageViewer extends BaseActivity implements OnTouchListener {
 
     }
     
+    final Runnable SaveBitmap2SdRunnable = new Runnable(){
+        @Override
+        public void run(){
+            Log.d(TAG,"=== save2SD ===");
+
+            if(!(Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED))) {
+                 return;
+            }
+            try {
+                File dir = new File(WALLPAPER_BUCKET_NAME);
+                if (!dir.exists()) dir.mkdirs();
+                
+                if(!new File(mPath).exists()){
+                    FileOutputStream fout = new FileOutputStream(mPath);
+                    BitmapDrawable bd = (BitmapDrawable)imageView.getDrawable();
+                    if(bd != null){
+                        bd.getBitmap().compress(CompressFormat.PNG, 100, fout);
+                        fout.close();
+                    }else{
+                        return;
+                    }
+
+                }
+                return;
+                
+            }catch (Exception ex){
+                ex.printStackTrace();
+            }
+        }
+    };
+    
     private boolean save2SD(){
     	Log.d(TAG,"=== save2SD ===");
 
@@ -314,10 +258,15 @@ public class ImageViewer extends BaseActivity implements OnTouchListener {
             
             if(!new File(mPath).exists()){
                 FileOutputStream fout = new FileOutputStream(mPath);
-                mBitmap.compress(CompressFormat.PNG, 100, fout);
-                fout.close();
+                BitmapDrawable bd = (BitmapDrawable)imageView.getDrawable();
+                if(bd != null){
+                    bd.getBitmap().compress(CompressFormat.PNG, 100, fout);
+                    fout.close();
+                }else{
+                    return false;
+                }
+
             }
-            //path = String.format("%s/asoiaf-photo-%d.png", WALLPAPER_BUCKET_NAME, System.currentTimeMillis());
             Toast.makeText(this, R.string.save2sd_success, Toast.LENGTH_SHORT).show();
             return true;
             
@@ -348,7 +297,15 @@ public class ImageViewer extends BaseActivity implements OnTouchListener {
 			}
 		}
 	}
+	
+	@Override
+	public void onStop(){
+	    imageLoader.stop();
+	    super.onStop();
+	}
+	
     
+    @SuppressWarnings("unused")
     private class DownloadImageTask extends AsyncTask<ImageView, Integer, Bitmap> {
     	private ImageView imageView = null;
     	
@@ -364,15 +321,12 @@ public class ImageViewer extends BaseActivity implements OnTouchListener {
         }
     	@Override
         protected void onPostExecute(Bitmap result) {
-            //showDialog("Downloaded " + result + " bytes");
     		if(result != null){
-    			mBitmap = result;
+    		    Log.d(TAG,"=== imageview set bitmap");
+    			//mScaledBitmap = result;
     			mTextViewTip.setVisibility(View.INVISIBLE);
     			imageView.setVisibility(View.VISIBLE);
         		imageView.setImageBitmap(result);
-                minZoom();
-                center();
-                imageView.setImageMatrix(matrix);
                 mProgressBar.setVisibility(View.INVISIBLE);
     		}
 
@@ -396,9 +350,15 @@ public class ImageViewer extends BaseActivity implements OnTouchListener {
             byte[] image = EntityUtils.toByteArray(response.getEntity());
 
             publishProgress(75);
-
-            Bitmap mBitmap = BitmapFactory.decodeByteArray(image, 0, image.length);
-
+            BitmapFactory.Options option = new BitmapFactory.Options();
+//            option.inJustDecodeBounds = true;
+//            BitmapFactory.decodeByteArray(image, 0, image.length, option);
+//            option.inJustDecodeBounds = false;
+            option.inSampleSize = 2;
+            publishProgress(80);
+            //Bitmap mBitmap = BitmapFactory.decodeByteArray(image, 0, image.length);
+            Bitmap mBitmap = BitmapFactory.decodeByteArray(image, 0, image.length, option);
+            
             publishProgress(100);
 
             return mBitmap;
@@ -410,6 +370,5 @@ public class ImageViewer extends BaseActivity implements OnTouchListener {
           return null;
         }
     }
-    
 
 }

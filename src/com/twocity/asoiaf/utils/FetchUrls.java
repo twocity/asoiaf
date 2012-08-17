@@ -39,7 +39,7 @@ public class FetchUrls {
 	
 	public static ArrayList<ImageUrl> FetchImageUrlList(){
 		ArrayList<ImageUrl> list = new ArrayList<ImageUrl>();
-		for(int i=1;i<=60;i++){
+		for(int i=1;i<=84;i++){
 			String url = String.format(FetchUrls.IMAGE_URL, String.valueOf(i));
 			ImageUrl item = FetchImageUrl(url);
 			if(!item.isEmpty()){

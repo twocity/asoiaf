@@ -10,8 +10,7 @@ import android.widget.SimpleCursorAdapter;
 
 import com.twocity.asoiaf.R;
 
-
- public class ImageCursorAdapter extends SimpleCursorAdapter {
+public class ImageCursorAdapter extends SimpleCursorAdapter {
         private ImageView imageview;
         private LayoutInflater mInflater;
         private final ImageDownloader imageDownloader = new ImageDownloader();
@@ -32,6 +31,7 @@ import com.twocity.asoiaf.R;
             int thumbIndex = cursor.getColumnIndex("thumb");
             imageview = (ImageView)ll.findViewById(R.id.imageview_item);
             imageview.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            //imageview.setPadding(8, 8, 8, 8);
             String imagelink = cursor.getString(thumbIndex);
             imageDownloader.download(imagelink, (ImageView) imageview);
         }

@@ -42,12 +42,11 @@
 	    
 	    <ImageView
 	        android:id="@+id/imageviewer"
-	        android:layout_width="fill_parent"
-	        android:layout_height="fill_parent"
-	        android:gravity="center"
-	        android:scaleType="matrix" 
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="center"
+	        android:adjustViewBounds="true"
 	        android:contentDescription="@string/description_logo"
-	        android:src="@drawable/main_test_bg"
 	        android:visibility="gone">
 	    </ImageView>
         

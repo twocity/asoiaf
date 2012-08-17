@@ -8,8 +8,11 @@
 package com.twocity.asoiaf;
 
 public final class R {
+    public static final class anim {
+        public static final int fade_in=0x7f040000;
+    }
     public static final class array {
-        public static final int loading_tips=0x7f040000;
+        public static final int loading_tips=0x7f050000;
     }
     public static final class attr {
         /** <p>Must be an integer value, such as "<code>100</code>".
@@ -104,21 +107,22 @@ containing a value of this type.
         public static final int startHour=0x7f010008;
     }
     public static final class color {
-        public static final int background1=0x7f050005;
-        public static final int background2=0x7f050006;
-        public static final int background3=0x7f050007;
-        public static final int foreground1=0x7f050003;
-        public static final int foreground2=0x7f050004;
-        public static final int title_background=0x7f050000;
-        public static final int title_separator=0x7f050008;
-        public static final int title_text=0x7f050001;
-        public static final int title_text_alt=0x7f050002;
+        public static final int background1=0x7f060005;
+        public static final int background2=0x7f060006;
+        public static final int background3=0x7f060007;
+        public static final int foreground1=0x7f060003;
+        public static final int foreground2=0x7f060004;
+        public static final int highlight=0x7f060009;
+        public static final int title_background=0x7f060000;
+        public static final int title_separator=0x7f060008;
+        public static final int title_text=0x7f060001;
+        public static final int title_text_alt=0x7f060002;
     }
     public static final class dimen {
-        public static final int text_size_large=0x7f060003;
-        public static final int text_size_medium=0x7f060002;
-        public static final int text_size_small=0x7f060001;
-        public static final int title_height=0x7f060000;
+        public static final int text_size_large=0x7f070003;
+        public static final int text_size_medium=0x7f070002;
+        public static final int text_size_small=0x7f070001;
+        public static final int title_height=0x7f070000;
     }
     public static final class drawable {
         public static final int bg=0x7f020000;
@@ -126,55 +130,57 @@ containing a value of this type.
         public static final int btn_bg_selected=0x7f020002;
         public static final int culture=0x7f020003;
         public static final int edit_text_style=0x7f020004;
-        public static final int geography=0x7f020005;
-        public static final int history=0x7f020006;
-        public static final int house=0x7f020007;
-        public static final int ic_launcher=0x7f020008;
-        public static final int ic_menu_about=0x7f020009;
-        public static final int ic_menu_refresh=0x7f02000a;
-        public static final int main_heat_image_wrap=0x7f02000b;
-        public static final int main_test_bg=0x7f02000c;
-        public static final int page_curl=0x7f02000d;
-        public static final int people=0x7f02000e;
-        public static final int photos=0x7f02000f;
-        public static final int search_field_bg_default=0x7f020010;
-        public static final int search_field_bg_selected=0x7f020011;
-        public static final int summaries=0x7f020012;
-        public static final int take_photo=0x7f020013;
-        public static final int title_button=0x7f020014;
-        public static final int title_home=0x7f020015;
-        public static final int title_home_alt=0x7f020016;
-        public static final int title_home_default=0x7f020017;
-        public static final int title_search=0x7f020018;
-        public static final int title_search_alt=0x7f020019;
-        public static final int title_search_default=0x7f02001a;
+        public static final int frame=0x7f020005;
+        public static final int geography=0x7f020006;
+        public static final int history=0x7f020007;
+        public static final int house=0x7f020008;
+        public static final int ic_launcher=0x7f020009;
+        public static final int ic_menu_about=0x7f02000a;
+        public static final int ic_menu_refresh=0x7f02000b;
+        public static final int main_heat_image_wrap=0x7f02000c;
+        public static final int main_test_bg=0x7f02000d;
+        public static final int page_curl=0x7f02000e;
+        public static final int people=0x7f02000f;
+        public static final int photos=0x7f020010;
+        public static final int search_field_bg_default=0x7f020011;
+        public static final int search_field_bg_selected=0x7f020012;
+        public static final int selector_bg=0x7f020013;
+        public static final int summaries=0x7f020014;
+        public static final int take_photo=0x7f020015;
+        public static final int title_button=0x7f020016;
+        public static final int title_home=0x7f020017;
+        public static final int title_home_alt=0x7f020018;
+        public static final int title_home_default=0x7f020019;
+        public static final int title_search=0x7f02001a;
+        public static final int title_search_alt=0x7f02001b;
+        public static final int title_search_default=0x7f02001c;
     }
     public static final class id {
-        public static final int blocks_now=0x7f070007;
-        public static final int blocks_ruler=0x7f070006;
-        public static final int db1_root=0x7f07000a;
-        public static final int dialog_discard_confirm=0x7f070003;
-        public static final int dialog_moderator=0x7f070004;
-        public static final int dialog_wave=0x7f070005;
-        public static final int edit_search=0x7f070013;
-        public static final int gridview=0x7f070009;
-        public static final int home_btn_culture=0x7f07000f;
-        public static final int home_btn_geography=0x7f07000d;
-        public static final int home_btn_history=0x7f07000e;
-        public static final int home_btn_house=0x7f07000b;
-        public static final int home_btn_more=0x7f070010;
-        public static final int home_btn_people=0x7f07000c;
-        public static final int imageview_item=0x7f070017;
-        public static final int imageviewer=0x7f070012;
-        public static final int loading_tip=0x7f070011;
-        public static final int progressbar=0x7f070008;
-        public static final int save2sd=0x7f070018;
-        public static final int search_button=0x7f070014;
-        public static final int search_webview=0x7f070015;
-        public static final int title_container=0x7f070000;
-        public static final int title_logo=0x7f070001;
-        public static final int title_text=0x7f070002;
-        public static final int webview=0x7f070016;
+        public static final int blocks_now=0x7f080007;
+        public static final int blocks_ruler=0x7f080006;
+        public static final int db1_root=0x7f08000a;
+        public static final int dialog_discard_confirm=0x7f080003;
+        public static final int dialog_moderator=0x7f080004;
+        public static final int dialog_wave=0x7f080005;
+        public static final int edit_search=0x7f080013;
+        public static final int gridview=0x7f080009;
+        public static final int home_btn_culture=0x7f08000f;
+        public static final int home_btn_geography=0x7f08000d;
+        public static final int home_btn_history=0x7f08000e;
+        public static final int home_btn_house=0x7f08000b;
+        public static final int home_btn_more=0x7f080010;
+        public static final int home_btn_people=0x7f08000c;
+        public static final int imageview_item=0x7f080017;
+        public static final int imageviewer=0x7f080012;
+        public static final int loading_tip=0x7f080011;
+        public static final int progressbar=0x7f080008;
+        public static final int save2sd=0x7f080018;
+        public static final int search_button=0x7f080014;
+        public static final int search_webview=0x7f080015;
+        public static final int title_container=0x7f080000;
+        public static final int title_logo=0x7f080001;
+        public static final int title_text=0x7f080002;
+        public static final int webview=0x7f080016;
     }
     public static final class layout {
         public static final int activity_about=0x7f030000;
@@ -187,78 +193,78 @@ containing a value of this type.
         public static final int main=0x7f030007;
     }
     public static final class menu {
-        public static final int imageview_menu=0x7f0a0000;
+        public static final int imageview_menu=0x7f0b0000;
     }
     public static final class string {
-        public static final int about_intro=0x7f08001c;
-        public static final int app_name=0x7f080001;
-        public static final int default_intro=0x7f080015;
-        public static final int description_about=0x7f080003;
-        public static final int description_feature1=0x7f080006;
-        public static final int description_feature2=0x7f080007;
-        public static final int description_feature3=0x7f080008;
-        public static final int description_feature4=0x7f080009;
-        public static final int description_feature5=0x7f08000a;
-        public static final int description_feature6=0x7f08000b;
-        public static final int description_home=0x7f080004;
-        public static final int description_logo=0x7f080002;
-        public static final int description_search=0x7f080005;
-        public static final int feature1_intro=0x7f080016;
-        public static final int feature2_intro=0x7f080017;
-        public static final int feature3_intro=0x7f080018;
-        public static final int feature4_intro=0x7f080019;
-        public static final int feature5_intro=0x7f08001a;
-        public static final int feature6_intro=0x7f08001b;
-        public static final int first_load_data=0x7f08002b;
-        public static final int hello=0x7f080000;
-        public static final int home_title=0x7f08001e;
-        public static final int loading_pic=0x7f08002c;
-        public static final int not_mounted=0x7f08002a;
-        public static final int save2sd_success=0x7f080029;
-        public static final int save2sd_title=0x7f080026;
-        public static final int search_intro=0x7f08001d;
-        public static final int search_loading_tip=0x7f08002d;
-        public static final int set_wallpaper_toast_failed=0x7f080028;
-        public static final int set_wallpaper_toast_success=0x7f080027;
+        public static final int about_intro=0x7f09001c;
+        public static final int app_name=0x7f090001;
+        public static final int default_intro=0x7f090015;
+        public static final int description_about=0x7f090003;
+        public static final int description_feature1=0x7f090006;
+        public static final int description_feature2=0x7f090007;
+        public static final int description_feature3=0x7f090008;
+        public static final int description_feature4=0x7f090009;
+        public static final int description_feature5=0x7f09000a;
+        public static final int description_feature6=0x7f09000b;
+        public static final int description_home=0x7f090004;
+        public static final int description_logo=0x7f090002;
+        public static final int description_search=0x7f090005;
+        public static final int feature1_intro=0x7f090016;
+        public static final int feature2_intro=0x7f090017;
+        public static final int feature3_intro=0x7f090018;
+        public static final int feature4_intro=0x7f090019;
+        public static final int feature5_intro=0x7f09001a;
+        public static final int feature6_intro=0x7f09001b;
+        public static final int first_load_data=0x7f09002b;
+        public static final int hello=0x7f090000;
+        public static final int home_title=0x7f09001e;
+        public static final int loading_pic=0x7f09002c;
+        public static final int not_mounted=0x7f09002a;
+        public static final int save2sd_success=0x7f090029;
+        public static final int save2sd_title=0x7f090026;
+        public static final int search_intro=0x7f09001d;
+        public static final int search_loading_tip=0x7f09002d;
+        public static final int set_wallpaper_toast_failed=0x7f090028;
+        public static final int set_wallpaper_toast_success=0x7f090027;
         /**  menu 
          */
-        public static final int setwallpaper_title=0x7f080025;
-        public static final int title_about=0x7f08000c;
-        public static final int title_culture=0x7f080012;
-        public static final int title_geography=0x7f080010;
-        public static final int title_history=0x7f080011;
-        public static final int title_home=0x7f08000d;
-        public static final int title_house=0x7f08000e;
-        public static final int title_people=0x7f08000f;
-        public static final int title_photos=0x7f080013;
-        public static final int title_search=0x7f080014;
-        public static final int url_culture=0x7f080023;
-        public static final int url_geography=0x7f080022;
-        public static final int url_history=0x7f080021;
-        public static final int url_house=0x7f08001f;
-        public static final int url_maps=0x7f080024;
-        public static final int url_people=0x7f080020;
+        public static final int setwallpaper_title=0x7f090025;
+        public static final int title_about=0x7f09000c;
+        public static final int title_culture=0x7f090012;
+        public static final int title_geography=0x7f090010;
+        public static final int title_history=0x7f090011;
+        public static final int title_home=0x7f09000d;
+        public static final int title_house=0x7f09000e;
+        public static final int title_people=0x7f09000f;
+        public static final int title_photos=0x7f090013;
+        public static final int title_search=0x7f090014;
+        public static final int url_culture=0x7f090023;
+        public static final int url_geography=0x7f090022;
+        public static final int url_history=0x7f090021;
+        public static final int url_house=0x7f09001f;
+        public static final int url_maps=0x7f090024;
+        public static final int url_people=0x7f090020;
     }
     public static final class style {
-        public static final int HomeButton=0x7f090005;
-        public static final int TextBody=0x7f09000d;
+        public static final int HomeButton=0x7f0a0005;
+        public static final int TextBody=0x7f0a000d;
         /**  Base application theme is the default theme. 
          */
-        public static final int Theme=0x7f090000;
-        public static final int Theme_D1=0x7f090002;
-        public static final int Theme_D1dialog=0x7f090003;
+        public static final int Theme=0x7f0a0000;
+        public static final int Theme_D1=0x7f0a0002;
+        public static final int Theme_D1dialog=0x7f0a0003;
         /**  Variation on the Light theme that turns off the title 
          */
-        public static final int Theme_D1t=0x7f090001;
-        public static final int Theme_D1tranlucent=0x7f090004;
-        public static final int TitleBar=0x7f090006;
-        public static final int TitleBarAction=0x7f090007;
-        public static final int TitleBarLogo=0x7f09000a;
-        public static final int TitleBarProgressIndicator=0x7f090008;
-        public static final int TitleBarSearch=0x7f09000e;
-        public static final int TitleBarSeparator=0x7f090009;
-        public static final int TitleBarSpring=0x7f09000b;
-        public static final int TitleBarText=0x7f09000c;
+        public static final int Theme_D1t=0x7f0a0001;
+        public static final int Theme_D1tranlucent=0x7f0a0004;
+        public static final int TitleBar=0x7f0a0006;
+        public static final int TitleBarAction=0x7f0a0007;
+        public static final int TitleBarLogo=0x7f0a000a;
+        public static final int TitleBarProgressIndicator=0x7f0a0008;
+        public static final int TitleBarSearch=0x7f0a000e;
+        public static final int TitleBarSeparator=0x7f0a0009;
+        public static final int TitleBarSpring=0x7f0a000b;
+        public static final int TitleBarText=0x7f0a000c;
     }
     public static final class styleable {
         /** Attributes that can be used with a BlocksLayout.

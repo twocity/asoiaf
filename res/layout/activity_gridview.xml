@@ -3,7 +3,7 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/bg">
+    android:background="#ffffff">
     <LinearLayout style="@style/TitleBar">
         <ImageButton style="@style/TitleBarAction"
             android:contentDescription="@string/description_home"
@@ -19,8 +19,6 @@
             android:layout_height="wrap_content" 
             android:visibility="gone"/>
         
-        
-
         <ImageButton style="@style/TitleBarAction"
             android:contentDescription="@string/description_search"
             android:src="@drawable/title_search"
@@ -32,10 +30,13 @@
 	 	android:id="@+id/gridview"
 	    android:layout_width="fill_parent" 
 	    android:layout_height="fill_parent"
-	    android:persistentDrawingCache="animation|scrolling"
-        android:alwaysDrawnWithCache="true"
-	    android:numColumns="auto_fit"
-	    android:gravity="center"
+    	android:columnWidth="100dip"
+    	android:gravity="center"
+    	android:horizontalSpacing="4dip"
+    	android:numColumns="auto_fit"
+    	android:stretchMode="columnWidth"
+    	android:verticalSpacing="4dip"
+    	android:background="#ffffff"
 	/>
 
     

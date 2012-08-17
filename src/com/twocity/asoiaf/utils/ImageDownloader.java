@@ -16,6 +16,8 @@
 
 package com.twocity.asoiaf.utils;
 
+import com.twocity.asoiaf.R;
+
 import java.io.FilterInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -85,7 +87,7 @@ public class ImageDownloader {
      */
 
     /**
-     * Same as download but the image is always downloaded and the cache is not used.
+     * Same as @download but the image is always downloaded and the cache is not used.
      * Kept private at the moment as its interest is not clear.
      */
     private void forceDownload(String url, ImageView imageView) {
@@ -272,7 +274,7 @@ public class ImageDownloader {
         private final WeakReference<BitmapDownloaderTask> bitmapDownloaderTaskReference;
 
         public DownloadedDrawable(BitmapDownloaderTask bitmapDownloaderTask) {
-            super(Color.BLACK);
+            super(Color.GRAY);
             bitmapDownloaderTaskReference =
                 new WeakReference<BitmapDownloaderTask>(bitmapDownloaderTask);
         }

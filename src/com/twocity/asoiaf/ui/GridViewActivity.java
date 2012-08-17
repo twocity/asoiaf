@@ -1,30 +1,40 @@
 package com.twocity.asoiaf.ui;
 
+import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
+import com.twocity.asoiaf.R;
+import com.twocity.asoiaf.utils.DataBaseHelper;
+import com.twocity.asoiaf.utils.DownloadIntentService;
+import com.twocity.asoiaf.utils.ImageDownloader;
+
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.Cursor;
 import android.database.SQLException;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AbsListView;
-import android.widget.AbsListView.OnScrollListener;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-
-import com.twocity.asoiaf.R;
-import com.twocity.asoiaf.utils.DataBaseHelper;
-import com.twocity.asoiaf.utils.DownloadIntentService;
-import com.twocity.asoiaf.utils.ImageCursorAdapter;
+import android.widget.SimpleCursorAdapter;
 
 
-public class GridViewActivity extends BaseActivity implements OnScrollListener{
+public class GridViewActivity extends BaseActivity{
 	private static final String TAG = "ImageViewActivity";
 	
 	private static int QUERY_SUCCESS_MSG = 0;
@@ -32,9 +42,12 @@ public class GridViewActivity extends BaseActivity implements OnScrollListener{
 	private String ACTION_FETCH_URLS = "action.fetch_urls";
 	private GridView gridView;
 	private ProgressBar mProgressBar;
-	private ImageCursorAdapter cursorAdapter = null;
+	private ImageCursorAdapter2 cursorAdapter = null;
 	private Cursor mCursor = null;
-	private boolean loadMore = false;
+	
+	protected ImageLoader imageLoader = ImageLoader.getInstance();
+	private DisplayImageOptions options;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
@@ -42,19 +55,14 @@ public class GridViewActivity extends BaseActivity implements OnScrollListener{
 		
 		mProgressBar = (ProgressBar)findViewById(R.id.progressbar);
 		
-		setGridView();
-		
-
-//		SharedPreferences sp = this.getPreferences(MODE_PRIVATE);
-//		boolean isfirst = sp.getBoolean("first", true);
-//		if(isfirst){
-//			Toast.makeText(this, R.string.first_load_data, Toast.LENGTH_LONG).show();
-//			updateData();
-//			SharedPreferences.Editor editor = sp.edit();
-//			editor.putBoolean("first", false);
-//			editor.commit();
-//		}
-		
+	    options = new DisplayImageOptions.Builder()
+	       .showStubImage(R.drawable.frame)
+	       .showImageForEmptyUri(R.drawable.frame)
+           .cacheInMemory()
+           .cacheOnDisc()
+           .build();
+	    
+	    setGridView();
 	}
 	
 	private void setGridView(){
@@ -68,13 +76,13 @@ public class GridViewActivity extends BaseActivity implements OnScrollListener{
 				GridViewActivity.this.startActivity(intent);
 			}
 		});
-		//gridView.setOnScrollListener(this);
-        int[] toViews = {R.id.imageview_item}; 
-        String[] from = {"thumb"};
-        cursorAdapter = new ImageCursorAdapter(GridViewActivity.this, 
-              R.layout.grid_view_item, mCursor,
-              from, toViews);
-        gridView.setAdapter(cursorAdapter);
+
+//        int[] toViews = {R.id.imageview_item}; 
+//        String[] from = {"thumb"};
+//        cursorAdapter = new ImageCursorAdapter2(GridViewActivity.this, 
+//              R.layout.grid_view_item, mCursor,
+//              from, toViews);
+//        gridView.setAdapter(cursorAdapter);
         
 		mHandler.post(fetchCursorRunnable);
 	}
@@ -102,11 +110,6 @@ public class GridViewActivity extends BaseActivity implements OnScrollListener{
 	final Runnable fetchCursorRunnable = new Runnable(){
 		@Override
 		public void run(){
-//			DBHandler dbHandler = new DBHandler(GridViewActivity.this);
-//			mCursor = dbHandler.queryURLs();
-//			if(mCursor != null){
-//				mHandler.sendEmptyMessage(0);
-//			}
 			DataBaseHelper dbHelper = new DataBaseHelper(GridViewActivity.this);
 			try{
 				if(dbHelper.checkDataBase()){
@@ -132,7 +135,7 @@ public class GridViewActivity extends BaseActivity implements OnScrollListener{
                 Log.d(TAG,"=== update listview ===");
                 int[] toViews = {R.id.imageview_item}; 
                 String[] from = {"thumb"};
-                cursorAdapter = new ImageCursorAdapter(GridViewActivity.this, 
+                cursorAdapter = new ImageCursorAdapter2(GridViewActivity.this, 
                       R.layout.grid_view_item, mCursor,
                       from, toViews);
                 gridView.setAdapter(cursorAdapter);
@@ -142,35 +145,57 @@ public class GridViewActivity extends BaseActivity implements OnScrollListener{
 			}
 		}
 	};
-	
-    @Override
-    public void onScroll(AbsListView view,int firstVisible, int visibleCount, int totalCount) {
-        loadMore = firstVisible + visibleCount >= totalCount;
-    }
-    
-    @Override
-    public void onScrollStateChanged(AbsListView v, int s){
-        if(s == OnScrollListener.SCROLL_STATE_IDLE && loadMore){
-            Log.d(TAG,"=== load more ===");
-            //mHandler.post(fetchCursorRunnable);
-        }
-    }
-	
-//	public void onClickRefresh(View v){
-//		updateData();
-//	}
-	
+		
 	@Override
 	protected void onStart(){
-		super.onStart();
+		
 		IntentFilter filter = new IntentFilter();
 		filter.addAction("action_fetch_urls_complete");
 		this.registerReceiver(broadcastreceiver, filter);
+		super.onStart();
 	}
 	
 	@Override
 	protected void onStop(){
-		super.onStop();
+		imageLoader.stop();
 		this.unregisterReceiver(broadcastreceiver);
+		super.onStop();
 	}
+	
+	public class ImageCursorAdapter2 extends SimpleCursorAdapter {
+        private ImageView imageview;
+        private LayoutInflater mInflater;
+        private final ImageDownloader imageDownloader = new ImageDownloader();
+
+        public ImageCursorAdapter2 (Context context, int layout, Cursor c, String[] from, int[] to) {
+            super(context, layout, c, from, to);
+        }
+
+        @Override
+        public void bindView(View view, Context context, Cursor cursor) {
+            LinearLayout ll = null;
+            if (view == null) {
+                ll = (LinearLayout) mInflater.inflate(R.layout.grid_view_item,null);
+            } else {
+                ll = (LinearLayout)view;
+            }
+
+            int thumbIndex = cursor.getColumnIndex("thumb");
+            imageview = (ImageView)ll.findViewById(R.id.imageview_item);
+            imageview.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            String imagelink = cursor.getString(thumbIndex);
+            //imageDownloader.download(imagelink, (ImageView) imageview);
+            
+            imageLoader.displayImage(imagelink, imageview, options, new SimpleImageLoadingListener() {
+                @Override
+                public void onLoadingComplete(Bitmap loadedImage) {
+                    Animation anim = AnimationUtils.loadAnimation(GridViewActivity.this, R.anim.fade_in);
+                    imageview.setAnimation(anim);
+                    anim.start();
+                }
+            });
+            
+        }
+        
+    }
 }

@@ -1,10 +1,11 @@
 package com.twocity.asoiaf.utils;
 
-import java.io.IOException;
-
 import android.app.IntentService;
 import android.content.Intent;
 import android.util.Log;
+
+import java.io.IOException;
+import java.util.ArrayList;
 
 
 public  class DownloadIntentService extends IntentService{
@@ -32,6 +33,7 @@ public  class DownloadIntentService extends IntentService{
     		}catch(IOException e){
     			Log.d(TAG,e.getMessage());
     		}
+    		//createDB();
     	}
     }
     
@@ -59,5 +61,20 @@ public  class DownloadIntentService extends IntentService{
 				e.printStackTrace();
 			}
 		}
+    }
+    
+    @SuppressWarnings("unused")
+    private void createDB(){
+        Log.d(TAG,"=== createdb... ====");
+        DBHandler dbhandler = new DBHandler(this);
+        ArrayList<ImageUrl> lists = FetchUrls.FetchImageUrlList();
+        int i = 0;
+        for(ImageUrl item:lists){
+            if(!item.isEmpty()){
+                item.setId(i++);
+                dbhandler.insertURLs(item);
+            }
+            
+        }
     }
 }

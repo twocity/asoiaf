@@ -11,7 +11,7 @@ import android.util.Log;
 public class DBHandler extends SQLiteOpenHelper {
     
     private static final String TAG = "DBHandler";
-    private static final String DB_NAME = "asoiaf_db";
+    private static final String DB_NAME = "asoiaf_db_new";
     private static final int DB_VERSION = 1;
     private static final String _ID = "_id";
     private static final String PICTURE_URLS_TABLENAME = "picture_urls_table";
