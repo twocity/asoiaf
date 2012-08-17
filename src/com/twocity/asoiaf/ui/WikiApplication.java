@@ -20,9 +20,9 @@ public class WikiApplication extends Application {
         // method.
         Log.d("","==== ImageLoader Configuration ===");
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getApplicationContext())
-            .threadPoolSize(5)
+            .threadPoolSize(3)
             .threadPriority(Thread.NORM_PRIORITY - 2)
-            .memoryCacheSize(1500000*3) // 1.5 Mb
+            .memoryCacheSize(1500000*2) // 1.5 Mb
             .denyCacheImageMultipleSizesInMemory()
             .discCacheFileNameGenerator(new Md5FileNameGenerator())
             //.enableLogging() // Not necessary in common

@@ -61,10 +61,11 @@
     <!-- menu -->
     <string name="setwallpaper_title">设为壁纸</string>
     <string name="save2sd_title">保存到SD卡</string>
-    <string name="set_wallpaper_toast_success">设置壁纸成功！</string>
+    <string name="set_wallpaper_toast_success">七神与你同在，设置壁纸成功！</string>
     <string name="set_wallpaper_toast_failed">啊哦，失败了，再试一次吧</string>
-    <string name="save2sd_success">已保存到sd卡</string>
-    <string name="not_mounted">sd卡未挂载！</string>
+    <string name="save2sd_success">七神与你同在，已保存到sd卡</string>
+    <string name="save2sd_failed">七层地狱啊，保存图片失败，再试一次吧</string>
+    <string name="not_mounted">七层地狱啊,SD卡未挂载！</string>
     
     <string name="first_load_data">初始化数据，请稍等</string>
     <string name="loading_pic">Valar Morghulis\n凡人皆有一死</string>

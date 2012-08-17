@@ -215,15 +215,16 @@ containing a value of this type.
         public static final int feature4_intro=0x7f090019;
         public static final int feature5_intro=0x7f09001a;
         public static final int feature6_intro=0x7f09001b;
-        public static final int first_load_data=0x7f09002b;
+        public static final int first_load_data=0x7f09002c;
         public static final int hello=0x7f090000;
         public static final int home_title=0x7f09001e;
-        public static final int loading_pic=0x7f09002c;
-        public static final int not_mounted=0x7f09002a;
+        public static final int loading_pic=0x7f09002d;
+        public static final int not_mounted=0x7f09002b;
+        public static final int save2sd_failed=0x7f09002a;
         public static final int save2sd_success=0x7f090029;
         public static final int save2sd_title=0x7f090026;
         public static final int search_intro=0x7f09001d;
-        public static final int search_loading_tip=0x7f09002d;
+        public static final int search_loading_tip=0x7f09002e;
         public static final int set_wallpaper_toast_failed=0x7f090028;
         public static final int set_wallpaper_toast_success=0x7f090027;
         /**  menu 

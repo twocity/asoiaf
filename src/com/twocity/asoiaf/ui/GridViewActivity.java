@@ -1,9 +1,7 @@
 package com.twocity.asoiaf.ui;
 
-import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
 import com.twocity.asoiaf.R;
 import com.twocity.asoiaf.utils.DataBaseHelper;

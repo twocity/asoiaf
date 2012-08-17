@@ -220,6 +220,7 @@ public class ImageViewer extends BaseActivity {
             Log.d(TAG,"=== save2SD ===");
 
             if(!(Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED))) {
+                 mHandler.sendEmptyMessage(SD_NOT_MOUNT);
                  return;
             }
             try {
@@ -232,6 +233,7 @@ public class ImageViewer extends BaseActivity {
                     if(bd != null){
                         bd.getBitmap().compress(CompressFormat.PNG, 100, fout);
                         fout.close();
+                        mHandler.sendEmptyMessage(SAVE_PIC_OK);
                     }else{
                         return;
                     }
@@ -250,6 +252,7 @@ public class ImageViewer extends BaseActivity {
 
     	if(!(Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED))) {
              Toast.makeText(this,R.string.not_mounted, Toast.LENGTH_LONG).show();
+             
              return false;
         }
     	try {
