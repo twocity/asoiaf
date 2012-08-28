@@ -279,27 +279,27 @@ public class ImageViewer extends BaseActivity {
         }
     }
     
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		Log.d(TAG,"=== onActivityResult ===");
-		if(resultCode != RESULT_OK){
-			return;
-		}
-		if(requestCode == REQUEST_CROP_IMAGE){
-			Log.d(TAG,"=== set wallpaper in onActivityResult ===");
-			Bitmap bitmap = (Bitmap)data.getExtras().getParcelable("data");
-			WallpaperManager wallpaperManager = WallpaperManager.getInstance(this);
-			try{
-				wallpaperManager.setBitmap(bitmap);
-				Toast.makeText(this, R.string.set_wallpaper_toast_success, Toast.LENGTH_SHORT).show();
-			}catch(IOException e){
-				e.printStackTrace();
-			
-			}catch(Exception e){
-				e.printStackTrace();
-			}
-		}
-	}
+//	@Override
+//	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//		Log.d(TAG,"=== onActivityResult ===");
+//		if(resultCode != RESULT_OK){
+//			return;
+//		}
+//		if(requestCode == REQUEST_CROP_IMAGE){
+//			Log.d(TAG,"=== set wallpaper in onActivityResult ===");
+//			Bitmap bitmap = (Bitmap)data.getExtras().getParcelable("data");
+//			WallpaperManager wallpaperManager = WallpaperManager.getInstance(this);
+//			try{
+//				wallpaperManager.setBitmap(bitmap);
+//				Toast.makeText(this, R.string.set_wallpaper_toast_success, Toast.LENGTH_SHORT).show();
+//			}catch(IOException e){
+//				e.printStackTrace();
+//			
+//			}catch(Exception e){
+//				e.printStackTrace();
+//			}
+//		}
+//	}
 	
 	@Override
 	public void onStop(){

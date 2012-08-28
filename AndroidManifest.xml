@@ -2,11 +2,10 @@
     package="com.twocity.asoiaf"
     android:versionCode="1"
     android:versionName="1.0">
-
+	
+    <uses-sdk android:minSdkVersion="3" android:targetSdkVersion="8" />
     <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.SET_WALLPAPER"/>
-    <uses-sdk android:minSdkVersion="8" android:targetSdkVersion="10" />
-    <uses-permission android:name="android.permission.SET_WALLPAPER_HINTS"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     
 
