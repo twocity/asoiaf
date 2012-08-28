@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2011 twocity
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.twocity.asoiaf.utils;
 
 import java.io.File;
@@ -17,11 +33,10 @@ import android.util.Log;
 
 public class DataBaseHelper extends SQLiteOpenHelper{
 	private static final String TAG = "DataBaseHelper";
-    //The Android's default system path of your application database.
     private static String DB_PATH = "/data/data/com.twocity.asoiaf/databases/";
  
     private static String DB_NAME = "asoiaf_db";
-    private static final int DB_VERSION = 1;
+//    private static final int DB_VERSION = 1;
     private static final String _ID = "_id";
     private static final String PICTURE_URLS_TABLENAME = "picture_urls_table";
     private static final String THUMB = "thumb";
@@ -31,20 +46,13 @@ public class DataBaseHelper extends SQLiteOpenHelper{
  
     private final Context myContext;
  
-    /**
-     * Constructor
-     * Takes and keeps a reference of the passed context in order to access to the application assets and resources.
-     * @param context
-     */
+
     public DataBaseHelper(Context context) {
  
     	super(context, DB_NAME, null, 1);
         this.myContext = context;
     }	
- 
-  /**
-     * Creates a empty database on the system and rewrites it with your own database.
-     * */
+
     public void createDataBase() throws IOException{
  
     	boolean dbExist = checkDataBase();
@@ -71,10 +79,6 @@ public class DataBaseHelper extends SQLiteOpenHelper{
  
     }
  
-    /**
-     * Check if the database already exist to avoid re-copying the file each time you open the application.
-     * @return true if it exists, false if it doesn't
-     */
     public boolean checkDataBase(){
     	
 /*    	SQLiteDatabase checkDB = null;
@@ -100,11 +104,7 @@ public class DataBaseHelper extends SQLiteOpenHelper{
     	return dbfile.exists();
     }
  
-    /**
-     * Copies your database from your local assets-folder to the just created empty database in the
-     * system folder, from where it can be accessed and handled.
-     * This is done by transfering bytestream.
-     * */
+    
     private void copyDataBase() throws IOException{
  
     	//Open your local db as the input stream
@@ -187,9 +187,5 @@ public class DataBaseHelper extends SQLiteOpenHelper{
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
 	}
- 
-        // Add your public helper methods to access and get content from the database.
-       // You could return cursors by doing "return myDataBase.query(....)" so it'd be easy
-       // to you to create adapters for your views.
  
 }
